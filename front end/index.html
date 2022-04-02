@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>MTU</title>
+
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+  
+    <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+
+  </head>
+  <body>
+    <header class="cabecalho">
+      <div class="logo">
+        <img src="imagens/logo.svg" alt="Logo WEG" />
+        <label for="">MTU</label>
+        <p>- Monitor de Temperatura e Umidade</p>
+      </div>
+      <div class="menu">
+        <a class="menu-texto" href="#">Home</a>
+        <a class="menu-texto" href="#">Dados</a>
+        <a class="menu-texto" href="#">Calibração</a>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <div class="chartdiv">
+          <h2 class="titulo-chart">Indicador Temperatura</h2>
+          <div id="chartdiv-indicador"></div>
+        </div>
+        <div class="chartdiv">
+          <h2 class="titulo-chart">Indicador Umidade</h2>
+          <div id="chartdiv-indicador"></div>
+        </div>
+        <div class="chartdiv">
+          <h2 class="titulo-chart">Histórico Temperatura</h2>
+          <div id="chartdiv-linha"></div>
+        </div>
+        <div class="chartdiv">
+          <h2 class="titulo-chart">Histórico Umidade</h2>
+          <div id="chartdiv-linha"></div>
+        </div>
+      </div>
+    </main>
+    <footer class="rodape">
+      <img src="imagens/grid-weg.png" alt="" />
+      <div class="rodape-texto">
+        <p>Desenvolvido por Anderson Martins</p>
+        <p>Metrologia</p>
+        <p>Sistema da qualidade</p>
+        <p>WEG Linhares - 2022</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<script>
+  /*
+    Linha do tempo
+
+
+
+    */
+  am5.ready(function () {
+    // Create root element
+    // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+    var root = am5.Root.new("chartdiv-linha");
+
+    // Set themes
+    // https://www.amcharts.com/docs/v5/concepts/themes/
+    root.setThemes([am5themes_Animated.new(root)]);
+
+    // Create chart
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/
+    var chart = root.container.children.push(
+      am5xy.XYChart.new(root, {
+        panX: true,
+        panY: true,
+        wheelX: "panX",
+        wheelY: "zoomX",
+        pinchZoomX: true,
+      })
+    );
+
+    // Add cursor
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
+    var cursor = chart.set(
+      "cursor",
+      am5xy.XYCursor.new(root, {
+        behavior: "none",
+      })
+    );
+    cursor.lineY.set("visible", false);
+
+    // Generate random data
+    var date = new Date();
+    date.setHours(0, 0, 0, 0);
+    var value = 20;
+
+    function generateData() {
+      value = (value*8 + Math.round(Math.random() * 1.08 - 0.54))/8;
+      am5.time.add(date, "day", 1);
+      return {
+        date: date.getTime(),
+        value: value,
+      };
+    }
+
+    function generateDatas(count) {
+      var data = [];
+      for (var i = 0; i < count; ++i) {
+        data.push(generateData());
+      }
+      return data;
+    }
+
+    // Create axes
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+    var xAxis = chart.xAxes.push(
+      am5xy.DateAxis.new(root, {
+        maxDeviation: 0.2,
+        baseInterval: {
+          timeUnit: "day",
+          count: 1,
+        },
+        renderer: am5xy.AxisRendererX.new(root, {}),
+        tooltip: am5.Tooltip.new(root, {}),
+      })
+    );
+
+    var yAxis = chart.yAxes.push(
+      am5xy.ValueAxis.new(root, {
+        renderer: am5xy.AxisRendererY.new(root, {}),
+      })
+    );
+
+    // Add series
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+    var series = chart.series.push(
+      am5xy.LineSeries.new(root, {
+        name: "Series",
+        xAxis: xAxis,
+        yAxis: yAxis,
+        valueYField: "value",
+        valueXField: "date",
+        tooltip: am5.Tooltip.new(root, {
+          labelText: "{valueY}",
+        }),
+      })
+    );
+
+    // Add scrollbar
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
+    chart.set(
+      "scrollbarX",
+      am5.Scrollbar.new(root, {
+        orientation: "horizontal",
+      })
+    );
+
+    // Set data
+    var data = generateDatas(1200);
+    series.data.setAll(data);
+
+    // Make stuff animate on load
+    // https://www.amcharts.com/docs/v5/concepts/animations/
+    series.appear(1000);
+    chart.appear(1000, 100);
+  }); // end am5.ready()
+
+  /*
+
+    Indicador termometro
+
+
+    */
+
+  /**
+   * ---------------------------------------
+   * This demo was created using amCharts 5.
+   *
+   * For more information visit:
+   * https://www.amcharts.com/
+   *
+   * Documentation is available at:
+   * https://www.amcharts.com/docs/v5/
+   * ---------------------------------------
+   */
+
+  // Create root element
+  // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+  var root = am5.Root.new("chartdiv-indicador");
+
+  // Set themes
+  // https://www.amcharts.com/docs/v5/concepts/themes/
+  root.setThemes([am5themes_Animated.new(root)]);
+
+  // Create chart
+  // https://www.amcharts.com/docs/v5/charts/radar-chart/
+  var chart = root.container.children.push(
+    am5radar.RadarChart.new(root, {
+      panX: false,
+      panY: false,
+      startAngle: 180,
+      endAngle: 360,
+    })
+  );
+
+  // Create axis and its renderer
+  // https://www.amcharts.com/docs/v5/charts/radar-chart/gauge-charts/#Axes
+  var axisRenderer = am5radar.AxisRendererCircular.new(root, {
+    innerRadius: -10,
+    strokeOpacity: 1,
+    strokeWidth: 15,
+    strokeGradient: am5.LinearGradient.new(root, {
+      rotation: 0,
+      stops: [
+        { color: am5.color(0x0033ff) },
+
+        { color: am5.color(0x00a805) },
+
+        { color: am5.color(0xff0000) },
+      ],
+    }),
+  });
+
+  var xAxis = chart.xAxes.push(
+    am5xy.ValueAxis.new(root, {
+      maxDeviation: 0,
+      min: 15,
+      max: 25,
+      strictMinMax: true,
+      renderer: axisRenderer,
+    })
+  );
+
+  // Add clock hand
+  // https://www.amcharts.com/docs/v5/charts/radar-chart/gauge-charts/#Clock_hands
+  var axisDataItem = xAxis.makeDataItem({});
+  axisDataItem.set("value", 0);
+
+  var bullet = axisDataItem.set(
+    "bullet",
+    am5xy.AxisBullet.new(root, {
+      sprite: am5radar.ClockHand.new(root, {
+        radius: am5.percent(99),
+      }),
+    })
+  );
+
+  xAxis.createAxisRange(axisDataItem);
+
+  axisDataItem.get("grid").set("visible", false);
+
+  setInterval(() => {
+    axisDataItem.animate({
+      key: "value",
+      to: Math.round(15 + Math.random() * 10),
+      duration: 800,
+      easing: am5.ease.out(am5.ease.cubic),
+    });
+  }, 2000);
+
+  // Make stuff animate on load
+  chart.appear(1000, 100);
+</script>

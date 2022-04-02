@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Red Hat Display", sans-serif;
+  max-width: 1000;
+}
+
+body {
+  background-color: #023a67;
+}
+
+body::-webkit-scrollbar {
+  width: 14px; /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+  background: #ffffff; /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #023a67; /* color of the scroll thumb */
+  border-radius: 3px; /* roundness of the scroll thumb */
+  border: 1px solid #ffffff; /* creates padding around scroll thumb */
+}
+
+.cabecalho {
+  color: rgb(255, 255, 255);
+  font-weight: 500;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #023a67;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.logo {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 40px;
+  color: rgb(255, 255, 255);
+}
+
+.menu-texto {
+  color: rgb(255, 255, 255);
+  font-weight: 400;
+}
+
+.container {
+  background-color: #e7e7e7;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  min-height: 420px;
+}
+
+.chartdiv {
+  background-color: #ffffff;
+  border: 1px solid #d6d6d6;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 10px;
+}
+
+#chartdiv-linha {
+  min-width: 620px;
+  width: 50%;
+  height: 300px;
+  max-width: 100%;
+}
+
+#chartdiv-indicador {
+  min-width: 620px;
+  width: 50%;
+  height: 300px;
+  max-width: 100%;
+}
+
+.titulo-chart {
+  border-bottom: 1px solid #d6d6d6;
+  font-size: 16px;
+  color: #d6d6d6;
+  background-color: #023a67;
+  border-radius: 4px 4px 0px 0px;
+  font-weight: 400;
+  padding: 5px;
+}
+
+.rodape {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-evenly;
+  align-items: center;
+  color: rgb(255, 255, 255);
+  background-color: #023a67;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.rodape-texto {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 100;
+}
