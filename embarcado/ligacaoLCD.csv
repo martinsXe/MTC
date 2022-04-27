@@ -1,0 +1,17 @@
+Pino LCD;Fun‡Æo;Liga‡Æo
+1;Vss;GND
+2;Vdd;VCC 5V
+3;V0;Pino central potenciometro
+4;RS;Pino 21
+5;RW;GND
+6;E;Pino 23
+7;D0;NC
+8;D1;NC
+9;D2;NC
+10;D3;NC
+11;D4;Pino 15
+12;D5;Pino 13
+13;D6;Pino 19
+14;D7;Pino 17
+15;A;VCC 5V
+16;K;GND
